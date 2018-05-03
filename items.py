@@ -16,7 +16,7 @@ class Weapon(Item):
 
 	
 	def __str__(self):
-		return "{} {} Ammunition: {} Loaded: {}".format(self.name, self.description, self.ammunition, self.magazine_loaded)
+		return "{} {}".format(self.name, self.description,)
 
 class Grenade(Item):
 	def __init__(self, damage, description, name, ammunition):

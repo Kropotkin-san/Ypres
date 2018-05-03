@@ -3,6 +3,7 @@ import world
 from collections import OrderedDict
 
 def play():
+	print("The year is 1915 and you are Ethan Barnes, a young british soldier who is currently fighting in the second battle of Ypres.")
 	world.parse_world_dsl()
 	player = Player()
 	while player.is_alive():
@@ -25,15 +26,17 @@ def get_available_actions(room, player):
 	if player:
 		action_adder(actions, 'q', player.exit, "Quit the game")
 	if player.inventory:
-		action_adder(actions, 'i', player.print_inventory, "Print Inventory")
+		action_adder(actions, 'i', player.print_inventory, "Show Inventory")
+	if player.check_ammo:
+		action_adder(actions, 'a', player.check_ammo, "Check ammunition")
 	if isinstance(room, world.EnemyTile) and room.enemy.is_alive():
 		action_adder(actions, '1', player.enfieldattack, "Shoot with your rifle")
 		action_adder(actions, '2', player.webleyattack, "Shoot with your revolver")
 		action_adder(actions, 'g', player.grenadeattack, "Throw a grenade")
-	#if player.webleycheck != 0:
-	#	action_adder(actions, 'reload revolver', player.webley_reload)
-	#if player.enfieldcheck != 0:
-	#	action_adder(actions, 'reload rifle', player.enfield_reload)
+	if player.webleycheck():
+		action_adder(actions, 'reload revolver', player.webley_reload,"Reload Webley")
+	if player.enfieldcheck():
+		action_adder(actions, 'reload rifle', player.enfield_reload,"Reload Enfield",)
 	else:
 		if world.tile_at(room.x, room.y - 1):
 			action_adder(actions, 'n', player.move_North, "Go North")

@@ -38,21 +38,38 @@ class Player:
 		for item in self.inventory:
 			print('* ' + str(item))
 
+	def check_ammo(self):
+		print("")
+		print("Webley Ammunition: {} Loaded: {}".format(self.webley_ammo, self.webley_loaded))
+		print("Enfield Ammunition: {} Loaded: {}".format(self.enfield_ammo, self.enfield_loaded))
+
 	#Function that is used in the game loop in order to check if player can reload the rifle
 	def enfieldcheck(self):	
-		enfieldcheck = self.enfield_capacity - self.enfield_loaded
+		self.enfieldcheckvar = self.enfield_capacity - self.enfield_loaded
+		if self.enfieldcheckvar != 0:
+			enfieldcheck = True
+		else:
+			enfieldcheck = False
+		return self.enfieldcheckvar
+		return enfieldcheck
 
 	def webleycheck(self):	
-		webleycheck = self.webley_capacity - self.webley_loaded
+		self.webleycheckvar = self.webley_capacity - self.webley_loaded
+		if self.webleycheckvar != 0:
+			webleycheck = True
+		else:
+			webleycheck = False
+		return self.webleycheckvar
+		return webleycheck
 
-	#The reload function that will be called in the game loop. It uses the same value as the game loop to calculate how much will be reloaded
 	def webley_reload(self):
-		self.webley_loaded += self.webleycheck
-		self.webley_ammo -= self.webleycheck
+		self.webley_loaded += self.webleycheckvar
+		self.webley_ammo -= self.webleycheckvar
 
 	def enfield_reload(self):
-		self.enfield_loaded += self.enfieldcheck
-		self.enfield_ammo -= self.enfieldcheck
+		self.enfield_loaded += self.enfieldcheckvar
+		self.enfield_ammo -= self.enfieldcheckvar
+
 
 	def enfieldattack(self):
 		room = world.tile_at(self.x, self.y)
@@ -81,42 +98,42 @@ class Player:
 		else:
 			print("You need to reload!")
 
-		def webleyattack(self):
-			room = world.tile_at(self.x, self.y)
-			enemy = room.enemy
-			r1 = random.random()
-			r2 = random.random()
-			if self.webley_loaded > 0:
-				print("")
-				print("You fire your webley at the enemy.")
-				self.webley_loaded -= 1
-				if r1 < 0.35:
-					print("You miss.")
-				elif r1 > 0.35:
-					enemy.hp -= items.Webley().damage
-					if not enemy.is_alive():
-						print("The soldier sinks to the ground. Mortally wounded.")
-					else:
-						print("You wound the soldier.")
-			else:
-				print("You need to reload!")
-
-		def grenadeattack(self):
-			room = world.tile_at(self.x, self.y)
-			enemy = room.enemy
-			r1 = random.random()
-			r2 = random.random()
-			self.grenade_ammo -= 1
-			if r1 < 0.5:
-				print("The grenade misses the soldier.")
-			else:
-				enemy.hp -= items.Grenade().damage
-				if r2 < 0.4:
-					print("The soldier collapses as his left leg is blown clean off.")
-				elif r2 < 0.8:
-					print("The soldier drops to the ground desperately holding onto his abdomen while screaming.")
+	def webleyattack(self):
+		room = world.tile_at(self.x, self.y)
+		enemy = room.enemy
+		r1 = random.random()
+		r2 = random.random()
+		if self.webley_loaded > 0:
+			print("")
+			print("You fire your webley at the enemy.")
+			self.webley_loaded -= 1
+			if r1 < 0.35:
+				print("You miss.")
+			elif r1 > 0.35:
+				enemy.hp -= items.Webley().damage
+				if not enemy.is_alive():
+					print("The soldier sinks to the ground. Mortally wounded.")
 				else:
-					print("The soldier collapses to the ground clutching what used to be his arm.")
+					print("You wound the soldier.")
+		else:
+			print("You need to reload!")
+
+	def grenadeattack(self):
+		room = world.tile_at(self.x, self.y)
+		enemy = room.enemy
+		r1 = random.random()
+		r2 = random.random()
+		self.grenade_ammo -= 1
+		if r1 < 0.5:
+			print("The grenade misses the soldier.")
+		else:
+			enemy.hp -= items.Grenade().damage
+			if r2 < 0.4:
+				print("The soldier collapses as his left leg is blown clean off.")
+			elif r2 < 0.8:
+					print("The soldier drops to the ground desperately holding onto his abdomen while screaming.")
+			else:
+				print("The soldier collapses to the ground clutching what used to be his arm.")
 
 
 	#Checks if player is actually alive

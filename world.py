@@ -27,8 +27,6 @@ def modify_player(self, player):
 class StartingTile(MapTile):
 	def intro_text(self):
 		return """
-The year is 1915 and you are Ethan Barnes, a young british soldier who is currently fighting in the second battle of Ypres.
-
 You are standing in the rear line of a trench.
 To your right is a closed door that leads into a dimly light room.
 To your left is a muddy passageway.
@@ -129,15 +127,15 @@ You are now only about a hundred meters away from the German trench.
 	def modify_player(self, player):
 	    pass
 
-class InstaDeath(Maptile):
+class InstaDeath(MapTile):
 	def intro_text(self):
 		return """
 You are hit by a rifle round from the German trench. You die instantly.
 		"""
 	def modify_player(self, player):
-		player.hp() -= 100
+		player.hp -= 100
 
-class ArtilleryTile(Maptile):
+class ArtilleryTile(MapTile):
 	def intro_text(self):
 		return """
 You can now see the German trench, it's just 50 meters away from you.
@@ -146,7 +144,80 @@ Suddenly you hear a great roar and all you see is a blinding flash.
 You were hit by an artillery shell blowing off your lower body. However another soldier carries you back to your own trench where you succumb to your injuries hours later.
 		"""
 	def modify_player(self, player):
-		player.hp() -= 100
+		player.hp -= 100
+
+class EnemyTile2(EnemyTile):
+	def __init__(self, x, y):
+		self.enemy = enemies.Landser1()
+
+		super().__init__(x, y)
+
+	def intro_text(self):
+		if self.enemy.is_alive() and self.enemy != None:
+			return"""
+You see a German soldier about 150 meters away. He seems to be scouting your trench.
+
+			"""
+		else:
+			return"""
+You are in the frontline of the trench. There lies a spent casing on the ground where you shot the scout.
+
+			""".format(self.enemy.name)
+
+	def modify_player(self, player):
+		r = random.random()
+		if r > 0.8:
+			player.hp -= 15
+			print("You have {} HP left.".format(player.hp))
+			
+
+class EnemyTile1(EnemyTile):
+	def __init__(self, x, y):
+		self.enemy = enemies.Landser2()
+
+		super().__init__(x, y)
+
+	def intro_text(self):
+		if self.enemy.is_alive() and self.enemy != None:
+			return"""
+a German soldier in a gas mask stands in front of you wielding a trench club.
+
+			"""
+		else:
+			return"""
+On the ground lies the body of the dead soldier.
+
+			""".format(self.enemy.name)
+
+	def modify_player(self, player):
+		r = random.random()
+		if r < 0.5:
+			player.hp -= 35
+			print("You have {} hp left.".format(player.hp))
+
+class EnemyTile3(EnemyTile):
+	def __init__(self, x, y):
+		self.enemy = enemies.Stosstruppe()
+
+		super().__init__(x, y)
+
+	def intro_text(self):
+		if self.enemy.is_alive() and self.enemy != None:
+			return"""
+A German soldier stands in front of with you a camouflaged helmet, a bandolier and several grenades in his belt. He has an almost frenzied look in his eyes.
+
+			"""
+		else:
+			return"""
+Here lies the dead body of the German soldier.
+
+			""".format(self.enemy.name)
+
+	def modify_player(self, player):
+		r = random.random()
+		if r < 0.4:
+			player.hp -= 40
+			print("You have {} HP left.".format(player.hp))
 
 def tile_at(x, y):
 	if x < 0 or y < 0:
@@ -179,7 +250,7 @@ world_dsl = """
 |N1|ID|ID|ID|ID|ID|
 |JP|OT|T3|P2|E2|T2|
 |  |  |  |P1|  |  |
-|  |FT|T1|T2|T1|ST|
+|  |  |T1|T2|T1|ST|
 """
 
 def is_dsl_valid(dsl):
