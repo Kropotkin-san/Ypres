@@ -237,7 +237,7 @@ def tile_at(x, y):
 
 world_dsl = """
 |  |AT|  |  |  |  |
-|ID|E3|  |  |  |  |
+|  |E3|  |  |  |  |
 |E1|N2|  |  |  |  |
 |N1|  |  |  |  |  |
 |JP|OT|T3|P2|E2|T2|
