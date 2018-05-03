@@ -127,14 +127,6 @@ You are now only about a hundred meters away from the German trench.
 	def modify_player(self, player):
 	    pass
 
-class InstaDeath(MapTile):
-	def intro_text(self):
-		return """
-You are hit by a rifle round from the German trench. You die instantly.
-		"""
-	def modify_player(self, player):
-		player.hp -= 100
-
 class ArtilleryTile(MapTile):
 	def intro_text(self):
 		return """
@@ -247,7 +239,7 @@ world_dsl = """
 |  |AT|  |  |  |  |
 |ID|E3|  |  |  |  |
 |E1|N2|  |  |  |  |
-|N1|ID|ID|ID|ID|ID|
+|N1|  |  |  |  |  |
 |JP|OT|T3|P2|E2|T2|
 |  |  |  |P1|  |  |
 |  |  |T1|T2|T1|ST|

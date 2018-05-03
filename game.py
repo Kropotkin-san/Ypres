@@ -12,13 +12,14 @@ def play():
 			print(room.intro_text())
 			room.modify_player(player)
 			choose_action(room, player)
-		
 		except KeyboardInterrupt:
 			print("")
 			exit()
 		except EOFError:
 			print("")
 			exit()
+	else:
+		print("You died.")
 
 def get_available_actions(room, player):
 	actions = OrderedDict()
