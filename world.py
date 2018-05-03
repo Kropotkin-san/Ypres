@@ -266,7 +266,6 @@ tile_type_dict = {
 	"N1": NoMansLand1,
 	"N2": NoMansLand2,
 	"AT": ArtilleryTile,
-	"ID": InstaDeath,
 	"E1": EnemyTile1,
 	"E2": EnemyTile2,
 	"E3": EnemyTile3,
