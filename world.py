@@ -158,7 +158,7 @@ You are in the frontline of the trench. There lies a spent casing on the ground 
 
 	def modify_player(self, player):
 		r = random.random()
-		if r > 0.8:
+		if r > 0.6:
 			player.hp -= 15
 			print("You have {} HP left.".format(player.hp))
 			
@@ -183,7 +183,7 @@ On the ground lies the body of the dead soldier.
 
 	def modify_player(self, player):
 		r = random.random()
-		if r < 0.5:
+		if r < 0.7:
 			player.hp -= 35
 			print("You have {} hp left.".format(player.hp))
 

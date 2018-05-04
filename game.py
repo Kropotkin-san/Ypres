@@ -23,7 +23,7 @@ def play():
 
 def get_available_actions(room, player):
 	actions = OrderedDict()
-	print("Available orders are:")
+	print("Available actions are:")
 	if player:
 		action_adder(actions, 'q', player.exit, "Quit the game")
 	if player.inventory:
